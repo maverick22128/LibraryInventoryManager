@@ -11,7 +11,8 @@ import java.util.ArrayList;
 // TA: Yeping Wang
 // Role: Data Wrangler
 // Lecturer: Florian Heimerl
-// Notes to Grader:
+// Notes to Grader: See note at bottom for reasoning behind using redundant static newBook() methods
+//                  with the constructors
 
 /**
  * Makes a Book object using data from a random real book
@@ -66,12 +67,12 @@ public class Book {
 
     }
 
-    for (int i = 0; i < 1 + rand.nextInt(11127); i++) { // 11128 is the number of entries in our
+    for (int i = 0; i < 1 + rand.nextInt(11121); i++) { // 11122 is the number of entries in our
                                                         // data sheet. This skips to a random
                                                         // line and then reads the next line in as
                                                         // this books data. The first line is
                                                         // skipped because it is just the column
-      //System.out.println(i + " - thsi is the value of i before nextline runs"); // headings
+                                                        // headings
       dataScanner.nextLine();
     }
 
@@ -294,10 +295,30 @@ public class Book {
 
 
 
-  // Test method, delete once confirmed that it works
-  public static void main(String[] args) {
-    
+  // Just a side note, my initial implementation, along with Mavericks original back end, simply
+  // used the constructors, however once two of our group members dropped we had to share one test
+  // engineer and one front end dev, and Sam, the other data wrangler, implemented his Book object
+  // using static newBook methods to return a new book instead of the constructors, so I added these
+  // methods in order to make sure my code worked with the front end and test engineers that
+  // originally wrote around the other code. Each of these static methods calls the overloaded
+  // constructor with the correct parameters.
 
+  public static Book newBook() {
+    return new Book();
+  }
+
+  public static Book newBook(String title, String author) {
+    return new Book(title, author);
+  }
+
+  public static Book newBook(String title, String author, int numPages, long barcode,
+      double averageRating, int numRatings, boolean isCheckedIn) {
+    return new Book(title, author, numPages, barcode, averageRating, numRatings, isCheckedIn);
+  }
+
+  public static Book newBook(String title, String author, int numPages, double averageRating,
+      int numRatings) {
+    return new Book(title, author, numPages, averageRating, numRatings);
   }
 
 }
